@@ -8,7 +8,7 @@
  *    function? What is its return type?
  * 
  *     ---- The functionality is the same, but async await makes our code more readable and it's easier to follow whats going on
- *          it's returning the results of the previous await commands
+ *          it's returning the string after it's had all of the promise commands executed on it
  * 
  * 
  * 2. Uncomment block #1 and run the code using `node challenge3.js`. What is
