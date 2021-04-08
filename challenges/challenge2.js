@@ -8,13 +8,27 @@
  *    expectation was correct.
  * 
  * 
+ *    ------I think that the greet function will run, and then the uppercase function will run. Lets see.
+ * 
+ *    ------Okay that's what happened and now I understand why there's variables down there
+ *
+ * 
+ * 
  * 2. What happens if greet() fails? Make it fail by changing 'name' to a number
  *    instead of a string. What happens? Does uppercaser() still run?
+ * 
+ * 
+ *    -------If greet fails then the uppercase function will not run, I think that's because
+ *            the "catch" condition is activated so we exit our of the logic that would normally make us go 
+ *           to the uppercase function 
  * 
  * 
  * 3. What happens if greet() succeeds and uppercaser() fails? Modify your code
  *    to achieve this result by changing the values of 'name' and 'my_str' and
  *    run the code again.
+ * 
+ *          -------If greet succeeds then the program is run as normal, but the 
+ *                error for uppercase will be displayed as the input is not a string
  * 
  * 
  * 4. Write a method that takes a string as input and returns the input string
@@ -31,20 +45,21 @@
  *******************************************************************************
  */
 
+  
  /**
   * Asynchronously returns a greeting for a specified name.
   * @param name The name of the person to greet.
   */
 function greet(name) {
-    return new Promise(function(resolve, reject) {
-      setTimeout(function() {
-        if (typeof name === 'string') { 
-          resolve('Hello there, ' + name);
-        } else {
-          reject('Name must be a string!');
-        }
-      }, 1000);
-    });
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      if (typeof name === 'string') { 
+        resolve('Hello there, ' + name);
+      } else {
+        reject('Name must be a string!');
+      }
+    }, 1000);
+  });
 }
 
 /**
@@ -63,8 +78,28 @@ function uppercaser(str) {
     });
 }
 
-name = 'Ducky'
-my_str = 'Make School is Awesome!!!'
+/**
+  * Asynchronously returns spaced out word.
+  * @param thing The thing we want to space out
+  */
+
+ function spacer(thing) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      if (typeof thing === 'string') { 
+        resolve(thing.split('').join(' '));
+      } else {
+        reject('Name must be a string!');
+      }
+    }, 2500);
+  });
+}
+
+name = "Brian"
+my_str = "Hello there"
+thing = "foo"
+
+
 
 greet(name)
     .then((greetResult) => {
@@ -73,7 +108,13 @@ greet(name)
     })
     .then((uppercaserResult) => {
         console.log(uppercaserResult)
-    }).catch((err) => {
+        return spacer(thing)
+    })
+    .then((spacerResult) => {
+      console.log(spacerResult)
+      
+  })
+    .catch((err) => {
         console.log('Received an error!')
         console.log(err);
     });

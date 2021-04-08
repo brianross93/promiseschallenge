@@ -7,12 +7,21 @@
  *    Async/Await. How is this function different than a regular (non-async)
  *    function? What is its return type?
  * 
+ *     ---- The functionality is the same, but async await makes our code more readable and it's easier to follow whats going on
+ *          it's returning the results of the previous await commands
+ * 
  * 
  * 2. Uncomment block #1 and run the code using `node challenge3.js`. What is
  *    printed when we use `greetAndUppercase` like a regular function?
  * 
+ *     ---- it's returning that we have a promise pending. The console is printing out 
+ *          that yes indeed a function with a promise inside is there
+ * 
  * 
  * 3. Uncomment block #2 and run the code again. What happens now?
+ * 
+ *     ----- It will return what we expect, the result of the string after it's run through our promised code
+ *            so this is how you accurately activate the promises and functions
  * 
  * 
  * 4. Write an asynchronous method 'spacer' that takes a string as input and 
@@ -61,21 +70,40 @@ function uppercaser(str) {
     });
 }
 
+/**
+ * Returns the spaced out thing for spacer
+ * @param thing The thing to space out
+ */
+function spacer(str) {
+  return new Promise(function(resolve, reject) {
+      setTimeout(function() {
+      if (typeof str === 'string') {
+        resolve(str.split('').join(' '));
+      } else {
+          reject('Pass in string plz');
+      }
+      }, 500);
+  });
+}
+
 async function greetAndUppercase(name) {
     greeting = await greet(name)
     uppercasedGreeting = await uppercaser(greeting)
-    return uppercasedGreeting
+    spaced = await spacer(uppercasedGreeting)
+    return spaced
 }
 
-/* Uncomment me! #1 */
-// result = greetAndUppercase('Ducky')
-// console.log(result)
 
-/* Uncomment me! #2 */
-// greetAndUppercase('Ducky')
-//     .then(function(result) {
-//         console.log(result)
-//     })
-//     .catch(function(err) {
-//         console.log(err)
-//     })
+
+
+result = greetAndUppercase('Ducky')
+console.log(result)
+
+
+greetAndUppercase('Ducky')
+    .then(function(result) {
+        console.log(result)
+    })
+    .catch(function(err) {
+        console.log(err)
+    })
